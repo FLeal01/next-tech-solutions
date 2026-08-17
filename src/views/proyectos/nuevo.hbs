@@ -1,0 +1,17 @@
+<div class="page-head">
+  <h1>Nuevo proyecto</h1>
+</div>
+
+{{#if error}}<div class="alert alert-error">{{error}}</div>{{/if}}
+
+<div class="card">
+  <div class="card-body">
+    <form method="post" action="/proyectos">
+      {{> proyecto_form proyecto=this}}
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Crear proyecto</button>
+        <a class="btn btn-quiet" href="/proyectos">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

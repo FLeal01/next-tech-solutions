@@ -1,0 +1,33 @@
+<div class="page-head">
+  <h1>{{proyecto.nombre}}</h1>
+  <div class="page-head-actions">
+    {{#if (eq proyecto.created_by usuario.id)}}
+      <a class="btn btn-outline" href="/proyectos/{{proyecto.id}}/editar">Editar</a>
+      <a class="btn btn-outline-danger" href="/proyectos/{{proyecto.id}}/eliminar">Eliminar</a>
+    {{/if}}
+    <a class="btn btn-quiet" href="/proyectos">Volver</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <dl class="dl">
+      <dt>ID</dt><dd class="num">{{proyecto.id}}</dd>
+      <dt>Fecha de inicio</dt><dd class="num">{{formatFecha proyecto.fecha_inicio}}</dd>
+      <dt>Estado</dt>
+      <dd>
+        {{#if (eq proyecto.estado 'completado')}}
+          <span class="pill pill-completado">Completado</span>
+        {{else if (eq proyecto.estado 'en_progreso')}}
+          <span class="pill pill-en_progreso">En progreso</span>
+        {{else}}
+          <span class="pill pill-pendiente">Pendiente</span>
+        {{/if}}
+      </dd>
+      <dt>Responsable</dt><dd>{{proyecto.responsable}}</dd>
+      <dt>Monto</dt><dd class="num">{{formatMonto proyecto.monto}}</dd>
+      <dt>Creado por</dt><dd>{{proyecto.autor.nombre}}</dd>
+      <dt>Registrado</dt><dd class="num">{{formatFecha proyecto.created_at}}</dd>
+    </dl>
+  </div>
+</div>

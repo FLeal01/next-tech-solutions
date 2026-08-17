@@ -1,0 +1,10 @@
+{{#if uf}}
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span class="ticker-dot" aria-hidden="true"></span>
+      <span class="ticker-label">UF del día</span>
+      <span class="ticker-valor">{{formatMonto uf.valor}}</span>
+      <span class="ticker-fecha">· {{formatFecha uf.fecha}}</span>
+    </div>
+  </div>
+{{/if}}

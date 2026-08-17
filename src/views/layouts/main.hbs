@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}} | Tech Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/public/css/main.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="/">Tech Solutions</a>
+        {{#if usuario}}
+          <div class="navbar-links">
+            <a href="/proyectos">Proyectos</a>
+            <a href="/proyectos/nuevo">Nuevo proyecto</a>
+          </div>
+        {{/if}}
+        <div class="navbar-user">
+          {{#if usuario}}
+            <span>Hola, <strong>{{usuario.nombre}}</strong></span>
+            <a class="btn btn-sm" href="/logout">Cerrar sesión</a>
+          {{else}}
+            <a class="btn btn-sm" href="/login">Iniciar sesión</a>
+            <a class="btn btn-sm btn-gold" href="/registro">Crear cuenta</a>
+          {{/if}}
+        </div>
+      </div>
+    </nav>
+
+    {{> uf}}
+
+    <main class="container">
+      {{{body}}}
+    </main>
+
+    <footer class="footer">
+      Tech Solutions · Gestión de proyectos · 2026
+    </footer>
+
+    <script>
+      document.querySelectorAll('[data-toggle-clave]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var input = btn.parentElement.querySelector('input');
+          var mostrar = input.type === 'password';
+          input.type = mostrar ? 'text' : 'password';
+          btn.textContent = mostrar ? 'Ocultar' : 'Mostrar';
+          btn.setAttribute('aria-pressed', String(mostrar));
+          btn.setAttribute('aria-label', mostrar ? 'Ocultar clave' : 'Mostrar clave');
+        });
+      });
+
+      (function () {
+        var input = document.getElementById('clave');
+        var lista = document.querySelector('.clave-requisitos');
+        if (!input || !lista) return;
+        // Mismas reglas que validarClave (backend): fuente de verdad es el servidor.
+        var reglas = {
+          largo: function (v) { return v.length >= 8; },
+          minuscula: function (v) { return /[a-záéíóúñ]/.test(v); },
+          mayuscula: function (v) { return /[A-ZÁÉÍÓÚÑ]/.test(v); },
+          numero: function (v) { return /[0-9]/.test(v); },
+          simbolo: function (v) { return /[^A-Za-zÁÉÍÓÚÑáéíóúñ0-9]/.test(v); }
+        };
+        input.addEventListener('input', function () {
+          var valor = input.value;
+          lista.querySelectorAll('[data-req]').forEach(function (li) {
+            var cumple = reglas[li.dataset.req](valor);
+            li.classList.toggle('cumple', cumple);
+            li.classList.toggle('falta', !cumple);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

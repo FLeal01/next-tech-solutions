@@ -1,0 +1,58 @@
+<div class="page-head">
+  <h1>Proyectos</h1>
+  <div class="page-head-actions">
+    <a class="btn btn-primary" href="/proyectos/nuevo">Nuevo proyecto</a>
+  </div>
+</div>
+
+{{#if error}}<div class="alert alert-error">{{error}}</div>{{/if}}
+
+{{#if proyectos.length}}
+  <div class="ledger-wrap">
+    <table class="ledger">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Fecha inicio</th>
+          <th>Estado</th>
+          <th>Responsable</th>
+          <th class="num">Monto</th>
+          <th>Creado por</th>
+          <th class="acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each proyectos}}
+          <tr>
+            <td class="nombre"><a href="/proyectos/{{this.id}}">{{this.nombre}}</a></td>
+            <td class="num">{{formatFecha this.fecha_inicio}}</td>
+            <td>
+              {{#if (eq this.estado 'completado')}}
+                <span class="pill pill-completado">Completado</span>
+              {{else if (eq this.estado 'en_progreso')}}
+                <span class="pill pill-en_progreso">En progreso</span>
+              {{else}}
+                <span class="pill pill-pendiente">Pendiente</span>
+              {{/if}}
+            </td>
+            <td>{{this.responsable}}</td>
+            <td class="num">{{formatMonto this.monto}}</td>
+            <td>{{this.autor.nombre}}</td>
+            <td class="acciones">
+              {{#if (eq this.created_by ../usuario.id)}}
+                <a class="btn btn-sm btn-outline" href="/proyectos/{{this.id}}/editar">Editar</a>
+                <a class="btn btn-sm btn-outline-danger" href="/proyectos/{{this.id}}/eliminar">Eliminar</a>
+              {{else}}
+                —
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+{{else}}
+  <div class="alert alert-info">
+    Aún no hay proyectos registrados. <a href="/proyectos/nuevo">Crea el primero</a>.
+  </div>
+{{/if}}

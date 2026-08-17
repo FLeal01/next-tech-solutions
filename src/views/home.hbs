@@ -1,0 +1,19 @@
+<section class="hero">
+  {{#if usuario}}
+    <p class="hero-eyebrow">Panel de control</p>
+    <h1>Hola, {{usuario.nombre}}.</h1>
+    <p>Revisa el estado de los proyectos, registra nuevos y mantén los montos al día.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/proyectos">Ver proyectos</a>
+      <a class="btn btn-quiet" href="/proyectos/nuevo">Nuevo proyecto</a>
+    </div>
+  {{else}}
+    <p class="hero-eyebrow">Tech Solutions</p>
+    <h1>Gestión de proyectos, bajo control.</h1>
+    <p>Registra proyectos, sigue su estado y controla sus montos en un solo lugar. Inicia sesión para comenzar.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/login">Iniciar sesión</a>
+      <a class="btn btn-quiet" href="/registro">Crear cuenta</a>
+    </div>
+  {{/if}}
+</section>

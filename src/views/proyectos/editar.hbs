@@ -1,0 +1,17 @@
+<div class="page-head">
+  <h1>Editar proyecto #{{proyecto.id}}</h1>
+</div>
+
+{{#if error}}<div class="alert alert-error">{{error}}</div>{{/if}}
+
+<div class="card">
+  <div class="card-body">
+    <form method="post" action="/proyectos/{{proyecto.id}}?_method=PUT">
+      {{> proyecto_form proyecto=proyecto}}
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Guardar cambios</button>
+        <a class="btn btn-quiet" href="/proyectos/{{proyecto.id}}">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

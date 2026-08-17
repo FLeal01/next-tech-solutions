@@ -1,0 +1,31 @@
+<div class="page-head">
+  <h1>Eliminar proyecto</h1>
+  <div class="page-head-actions">
+    <a class="btn btn-quiet" href="/proyectos/{{proyecto.id}}">Volver</a>
+  </div>
+</div>
+
+{{#if error}}<div class="alert alert-error">{{error}}</div>{{/if}}
+
+<div class="card">
+  <div class="card-body">
+    <dl class="dl">
+      <dt>ID</dt><dd class="num">{{proyecto.id}}</dd>
+      <dt>Nombre</dt><dd>{{proyecto.nombre}}</dd>
+      <dt>Fecha de inicio</dt><dd class="num">{{formatFecha proyecto.fecha_inicio}}</dd>
+      <dt>Estado</dt><dd>{{proyecto.estado}}</dd>
+      <dt>Responsable</dt><dd>{{proyecto.responsable}}</dd>
+      <dt>Monto</dt><dd class="num">{{formatMonto proyecto.monto}}</dd>
+      <dt>Creado por</dt><dd>{{proyecto.autor.nombre}}</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="alert alert-warn" style="margin-top: 1.25rem;">
+  Esta acción no se puede deshacer. El proyecto se eliminará definitivamente.
+</div>
+
+<form method="post" action="/proyectos/{{proyecto.id}}/eliminar?_method=DELETE" class="form-actions">
+  <button class="btn btn-danger" type="submit">Eliminar definitivamente</button>
+  <a class="btn btn-quiet" href="/proyectos/{{proyecto.id}}">Cancelar</a>
+</form>

@@ -1,0 +1,28 @@
+<div class="container-narrow">
+  <div class="page-head">
+    <h1>Iniciar sesión</h1>
+  </div>
+
+  {{#if error}}<div class="alert alert-error">{{error}}</div>{{/if}}
+
+  <div class="card">
+    <div class="card-body">
+      <form method="post" action="/login">
+        <div class="field">
+          <label for="correo">Correo</label>
+          <input class="input" id="correo" name="correo" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="clave">Clave</label>
+          <div class="input-password">
+            <input class="input" id="clave" name="clave" type="password" autocomplete="current-password" required />
+            <button class="toggle-clave" type="button" data-toggle-clave aria-pressed="false" aria-label="Mostrar clave">Mostrar</button>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <p class="form-foot">¿No tienes cuenta? <a href="/registro">Regístrate</a></p>
+</div>

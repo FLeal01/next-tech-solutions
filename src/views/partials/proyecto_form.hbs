@@ -1,0 +1,30 @@
+<div class="field">
+  <label for="nombre">Nombre</label>
+  <input class="input" id="nombre" name="nombre" value="{{proyecto.nombre}}" required />
+</div>
+<div class="field-row">
+  <div class="field">
+    <label for="fecha_inicio">Fecha de inicio</label>
+    <input class="input" id="fecha_inicio" name="fecha_inicio" type="date"
+           value="{{fechaInput proyecto.fecha_inicio}}" required />
+  </div>
+  <div class="field">
+    <label for="estado">Estado</label>
+    <select class="input" id="estado" name="estado">
+      {{#each estados}}
+        <option value="{{this}}" {{#if (eq this ../proyecto.estado)}}selected{{/if}}>{{this}}</option>
+      {{/each}}
+    </select>
+  </div>
+</div>
+<div class="field-row">
+  <div class="field">
+    <label for="responsable">Responsable</label>
+    <input class="input" id="responsable" name="responsable" value="{{proyecto.responsable}}" required />
+  </div>
+  <div class="field">
+    <label for="monto">Monto (CLP)</label>
+    <input class="input" id="monto" name="monto" type="number" min="0" step="1"
+           value="{{proyecto.monto}}" required />
+  </div>
+</div>
