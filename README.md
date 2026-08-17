@@ -1,4 +1,4 @@
-# Tech Solutions
+# Tech Solutions - Fabiola Leal S51
 
 Sistema de gestión de proyectos con autenticación JWT, construido con **Next.js + Express (MVC) + Prisma 7 + MySQL**, vistas server-rendered en **Handlebars** con un **sistema de diseño propio** (CSS puro, paleta lapislázuli, tipografías Archivo + IBM Plex) y una cinta ticker que muestra la **UF del día** (mindicador.cl).
 
@@ -28,9 +28,7 @@ Escogí este stack porque quería salir un poco de mi zona de confort y experime
 - [Middleware de autenticación](#middleware-de-autenticación)
 - [Componente UF del día](#componente-uf-del-día)
 - [Base de datos](#base-de-datos)
-- [Decisiones de arquitectura](#decisiones-de-arquitectura)
-- [Solución de problemas](#solución-de-problemas)
-- [Roadmap](#roadmap)
+- [Evidencias](#evidencias)
 
 ---
 
@@ -366,38 +364,34 @@ npx prisma migrate dev --name <nombre>   # nueva migración tras editar schema.p
 npx prisma studio                        # explorador visual (opcional)
 ```
 
-## Decisiones de arquitectura
-
-1. **Servidor custom Express sobre Next.js**: el brief exige patrón MVC con vistas Handlebars, algo que Next App Router no soporta de forma nativa. Express implementa todo el MVC; Next queda como fallback para futuras páginas React.
-2. **Prisma 7 con driver adapter**: la versión 7 eliminó el engine Rust y requiere un adapter explícito (`@prisma/adapter-mariadb`, compatible con MySQL 8). La URL de conexión vive en `prisma.config.ts`, no en el schema.
-3. **Nombres snake_case** (`created_at`, `created_by`, `fecha_inicio`) en schema, API y vistas, fieles al brief; tablas mapeadas a `usuarios`/`proyectos` con `@@map`.
-4. **Todas las rutas de proyectos requieren sesión**: listados y detalles también están protegidos (web y API); las únicas rutas públicas son Home, login, registro y `/api/health`. La interfaz refleja la sesión en toda la navegación gracias al middleware global `cargarUsuario`.
-5. **Argon2** (variante Argon2id por defecto) para el hash de claves: algoritmo moderno resistente a ataques con GPU, recomendado por OWASP; los parámetros (memoria, iteraciones, paralelismo) viajan embebidos en el propio hash.
-6. **Diseño propio en lugar de framework CSS**: `public/css/main.css` implementa un sistema completo (tokens de color, escala tipográfica, componentes) con identidad específica del producto — paleta lapislázuli (piedra nacional de Chile), dorado restringido a marca/ticker/foco, cifras tabulares en IBM Plex Mono para datos financieros. Sin menú hamburguesa: el navbar envuelve con flex en móvil. El único JS de UI es un script mínimo en el layout: toggle mostrar/ocultar de los campos de clave y validación en tiempo real de los requisitos de clave en el registro (mismas reglas que el validador del backend).
-
-Más detalle en [`CONTEXT.md`](CONTEXT.md) y [`PLAN.md`](PLAN.md).
-
-## Solución de problemas
-
-| Problema | Causa probable | Solución |
-|---|---|---|
-| `Access denied for user 'root'@'localhost'` | Credenciales MySQL incorrectas | Revisar `DATABASE_URL` en `.env`; recordar URL-encode de caracteres especiales |
-| `PrismaClientInitializationError: driver adapter is required` | Cliente instanciado sin adapter | Usar el singleton de `src/lib/prisma.ts`, nunca `new PrismaClient()` directo |
-| `ERR_MODULE_NOT_FOUND .../generated/prisma/client` | Cliente no generado | `npx prisma generate` |
-| El seed no termina / proceso colgado | Pool de conexiones abierto | Ya resuelto: `seed.ts` llama `await prisma.$disconnect()` |
-| Cinta UF no aparece | mindicador.cl inalcanzable | Comportamiento esperado (degradación elegante); revisar conectividad |
-| `RangeError: Invalid time value` en formularios | Helper de fecha con valor `undefined` | Ya resuelto: helpers `formatFecha`/`fechaInput` son null-safe |
-
-## Roadmap
-
-- [ ] Suite de tests automatizados
-- [ ] Paginación y filtros en listado de proyectos
-- [ ] Refresh tokens y roles de usuario
-- [ ] Protección CSRF en formularios web
-- [ ] Pipeline de build/start de producción verificado
+Más detalle en [`CONTEXT.md`](CONTEXT.md).
 
 ---
+## Evidencias
+- Home
+<img width="1916" height="1027" alt="Image" src="https://github.com/user-attachments/assets/f00101b2-764a-4b49-95f6-bbcb4fcfe84e" />
+- Creación de un nuevo usuario
+<img width="1917" height="1030" alt="Image" src="https://github.com/user-attachments/assets/35ba12a3-80b5-47df-a0bd-03b8574d5db2" />
+- Inicio de sesión
+<img width="1916" height="1030" alt="Image" src="https://github.com/user-attachments/assets/0d271d57-d104-40eb-a2b1-a5c1ebe72d0f" />
+- Dashboard
+<img width="1919" height="1031" alt="Image" src="https://github.com/user-attachments/assets/c0f0e7b8-4175-4dfc-8f9e-eb56eb447ee9" />
+- Proyectos
+<img width="1919" height="1028" alt="Image" src="https://github.com/user-attachments/assets/62a8fa9d-83c2-4e0d-879c-51f388b9c3d9" />
+- Creación de un nuevo proyecto
+<img width="1916" height="1031" alt="Image" src="https://github.com/user-attachments/assets/fc4828c5-860d-4475-af14-c31a752423cd" />
+- Actualización de la vista /proyectos
+<img width="1919" height="1028" alt="Image" src="https://github.com/user-attachments/assets/ff2cd45a-8990-4d9c-8ae6-c9e399066364" />
+- Actualización del proyecto
+<img width="1916" height="1029" alt="Image" src="https://github.com/user-attachments/assets/82d508ad-26d2-467d-b0f5-dafba2fbadb8" />
+- Actualización de la vista /proyectos
+<img width="1916" height="1031" alt="Image" src="https://github.com/user-attachments/assets/9ed15940-e04b-42b7-ab20-349715c1f083" />
+- Eliminación del proyecto
+<img width="1916" height="1028" alt="Image" src="https://github.com/user-attachments/assets/ad3cf966-b67c-49c4-9eb0-bde39500494f" />
+- Última actualización de /proyectos
+<img width="1916" height="1030" alt="Image" src="https://github.com/user-attachments/assets/ee86ab9c-17d4-436f-a3b5-76e4344f76de" />
 
+---
 <div align="center">
   <sub>Tech Solutions · Proyecto IPSS — Node.js / Next.js / Express / Prisma / MySQL</sub>
 </div>
